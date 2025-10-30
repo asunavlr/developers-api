@@ -433,7 +433,7 @@ O projeto inclui um Dockerfile otimizado:
 
 ### Docker Compose
 
-```yaml
+ ```yaml
 version: '3.8'
 services:
   api:
@@ -443,7 +443,44 @@ services:
     env_file:
       - .env
     restart: unless-stopped
-```
+ ```
+
+## ☁️ Deploy no Railway
+
+Você pode fazer deploy no Railway de duas formas: usando Docker (recomendado) ou usando Start Command sem Docker.
+
+### Opção A: Deploy com Docker (recomendado)
+- Pré-requisito: `Dockerfile` já configurado para usar `PORT` do ambiente.
+- Passos:
+  1. Acesse https://railway.app e crie um novo projeto.
+  2. Conecte o repositório GitHub: `asunavlr/developers-api`.
+  3. Railway detectará o `Dockerfile` automaticamente e fará o build.
+  4. Em "Variables", adicione:
+     - `SUPABASE_URL`
+     - `SUPABASE_ANON_KEY`
+     - `SUPABASE_SERVICE_ROLE_KEY` (opcional, recomendado para admin/status)
+  5. Faça deploy. O serviço ficará disponível em uma URL pública do Railway.
+
+### Opção B: Deploy sem Docker (Start Command)
+- Pré-requisito: `Procfile` incluído com `web: uvicorn python.app.main:app --host 0.0.0.0 --port $PORT`.
+- Passos:
+  1. No Railway, crie um serviço a partir do GitHub.
+  2. Em "Deploy → Start Command", use: `uvicorn python.app.main:app --host 0.0.0.0 --port $PORT`.
+  3. Em "Variables", adicione `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` (se aplicável).
+  4. Faça deploy e verifique os logs para confirmar que está rodando em `0.0.0.0:$PORT`.
+
+### Verificação pós-deploy
+- Acesse `https://<seu-subdominio>.railway.app/docs` para conferir a documentação Swagger.
+- Teste endpoints:
+  - `POST /auth/register` com payload válido.
+  - `POST /auth/login` e use o `access_token`.
+  - `GET /users/me` com `Authorization: Bearer {access_token}`.
+  - (Opcional Admin) `PATCH /users/{id}/status` com role admin.
+
+### Dicas
+- Caso use Docker, o container escuta `${PORT:-8000}` — Railway injeta `PORT` automaticamente.
+- Mantenha as chaves do Supabase como variáveis no Railway, nunca commitadas.
+- Use os logs do Railway para depurar falhas de build/start.
 
 ## 📁 Estrutura do Projeto
 
