@@ -1,0 +1,16 @@
+# Ignore Python build artifacts and virtual envs
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+.pytest_cache/
+
+# Ignore VCS
+.git/
+
+# OS files
+.DS_Store
+
+# Project-specific
+python/app/__pycache__/
+python/tests/__pycache__/
