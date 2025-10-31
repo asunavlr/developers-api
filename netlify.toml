@@ -1,0 +1,28 @@
+## Netlify configuration to proxy frontend routes to backend API
+## Replace YOUR_BACKEND_URL with your deployed API base URL (e.g., Railway)
+
+# Proxy API under /api/* to your backend
+[[redirects]]
+  from = "/api/*"
+  to = "https://YOUR_BACKEND_URL/:splat"
+  status = 200
+  force = true
+
+# Optional: direct auth routes
+[[redirects]]
+  from = "/auth/*"
+  to = "https://YOUR_BACKEND_URL/auth/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/users/*"
+  to = "https://YOUR_BACKEND_URL/users/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/docs"
+  to = "https://YOUR_BACKEND_URL/docs"
+  status = 200
+  force = true

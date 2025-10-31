@@ -482,6 +482,34 @@ Você pode fazer deploy no Railway de duas formas: usando Docker (recomendado) o
 - Mantenha as chaves do Supabase como variáveis no Railway, nunca commitadas.
 - Use os logs do Railway para depurar falhas de build/start.
 
+## 🌐 Deploy com Netlify (proxy)
+
+O Netlify não executa servidores Python/ASGI diretamente. A abordagem recomendada é:
+
+- Hospede a API FastAPI em uma plataforma de backend (Railway, Render, Fly.io, Cloud Run).
+- Use o Netlify para servir um site estático e fazer proxy das rotas de API via `netlify.toml`.
+
+### Passos
+
+1. Faça deploy do backend (veja a seção do Railway) e anote a URL pública (ex.: `seu-app.up.railway.app`).
+2. No repositório, edite `netlify.toml` e substitua `YOUR_BACKEND_URL` pela URL base do seu backend.
+3. Garanta que o diretório `public/` exista (já adicionamos um `index.html` simples) e use-o como "Publish directory".
+4. Conecte este repositório no Netlify: New Site → Import from GitHub → selecione o repo.
+5. Configure:
+   - Build command: vazio (nenhum build necessário)
+   - Publish directory: `public`
+6. Deploy.
+
+### Uso
+
+- Chamadas para `https://<seu-site>.netlify.app/api/*` serão redirecionadas para o backend.
+- `https://<seu-site>.netlify.app/docs` redireciona para a documentação Swagger do backend.
+
+### Observações
+
+- CORS está configurado como `*` em `python/app/main.py`. Em produção, considere restringir `allow_origins` para o domínio do seu Netlify.
+- Se quiser que `/` redirecione para `/docs`, adicione uma regra extra em `netlify.toml`.
+
 ## 📁 Estrutura do Projeto
 
 ```
