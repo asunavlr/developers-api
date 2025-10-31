@@ -4,25 +4,25 @@
 # Proxy API under /api/* to your backend
 [[redirects]]
   from = "/api/*"
-  to = "https://YOUR_BACKEND_URL/:splat"
+  to = "https://developers-api-gpw9.onrender.com/:splat"
   status = 200
   force = true
 
 # Optional: direct auth routes
 [[redirects]]
   from = "/auth/*"
-  to = "https://YOUR_BACKEND_URL/auth/:splat"
+  to = "https://developers-api-gpw9.onrender.com/auth/:splat"
   status = 200
   force = true
 
 [[redirects]]
   from = "/users/*"
-  to = "https://YOUR_BACKEND_URL/users/:splat"
+  to = "https://developers-api-gpw9.onrender.com/users/:splat"
   status = 200
   force = true
 
 [[redirects]]
   from = "/docs"
-  to = "https://YOUR_BACKEND_URL/docs"
+  to = "https://developers-api-gpw9.onrender.com/docs"
   status = 200
   force = true
