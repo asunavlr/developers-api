@@ -482,6 +482,34 @@ Você pode fazer deploy no Railway de duas formas: usando Docker (recomendado) o
 - Mantenha as chaves do Supabase como variáveis no Railway, nunca commitadas.
 - Use os logs do Railway para depurar falhas de build/start.
 
+## ☁️ Deploy no Render (gratuito)
+
+Render oferece um plano gratuito que roda serviços web a partir do seu `Dockerfile`.
+
+### Opção A: Deploy com Docker (recomendado)
+- Pré-requisito: `Dockerfile` já usa a variável `PORT` do ambiente.
+- Passos:
+  1. Acesse https://render.com e crie uma conta.
+  2. Clique em "New +" → "Web Service" → conecte seu repositório GitHub `asunavlr/developers-api`.
+  3. Render detectará o `Dockerfile` automaticamente.
+  4. Selecione o plano "Free".
+  5. Em "Environment Variables", adicione:
+     - `SUPABASE_URL`
+     - `SUPABASE_ANON_KEY`
+     - `SUPABASE_SERVICE_ROLE_KEY` (opcional)
+  6. Deploy. A URL pública ficará algo como `https://developers-api.onrender.com`.
+
+### Opção B: Blueprint (render.yaml)
+- Este repositório inclui `render.yaml` para facilitar.
+- Passos:
+  1. No Render, use "Blueprints" e aponte para o `render.yaml` deste repo.
+  2. Preencha as variáveis de ambiente.
+  3. Deploy no plano "Free".
+
+### Pós-deploy
+- Acesse `https://<seu-servico>.onrender.com/docs` para verificar o Swagger.
+- Use esta URL como backend no `netlify.toml`.
+
 ## 🌐 Deploy com Netlify (proxy)
 
 O Netlify não executa servidores Python/ASGI diretamente. A abordagem recomendada é:
