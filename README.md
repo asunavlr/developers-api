@@ -139,7 +139,7 @@ source .venv/bin/activate
 pip install -r python/requirements.txt
 
 # Executar a aplicação
-uvicorn python.app.main:app --host 0.0.0.0 --port 8000 --reload
+uvicorn python.app.main:app --host 0.0.0.0 --port 3000 --reload
 ```
 
 ### Opção 2: Docker
@@ -154,14 +154,14 @@ docker-compose up --build
 
 # Ou construir e executar manualmente
 docker build -t developers-api .
-docker run --env-file .env -p 8000:8000 developers-api
+docker run --env-file .env -p 3000:3000 developers-api
 ```
 
 ### 🌐 Acessar a Aplicação
 
-- **API**: http://localhost:8000
-- **Documentação**: http://localhost:8000/docs
-- **Redoc**: http://localhost:8000/redoc
+- **API**: http://localhost:3000
+- **Documentação**: http://localhost:3000/docs
+- **Redoc**: http://localhost:3000/redoc
 
 ## 📖 Documentação da API
 
@@ -439,7 +439,7 @@ services:
   api:
     build: .
     ports:
-      - "8000:8000"
+  - "3000:3000"
     env_file:
       - .env
     restart: unless-stopped
@@ -478,7 +478,7 @@ Você pode fazer deploy no Railway de duas formas: usando Docker (recomendado) o
   - (Opcional Admin) `PATCH /users/{id}/status` com role admin.
 
 ### Dicas
-- Caso use Docker, o container escuta `${PORT:-8000}` — Railway injeta `PORT` automaticamente.
+- Caso use Docker, o container escuta `${PORT:-3000}` — plataformas injetam `PORT` automaticamente.
 - Mantenha as chaves do Supabase como variáveis no Railway, nunca commitadas.
 - Use os logs do Railway para depurar falhas de build/start.
 
@@ -582,7 +582,7 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 ## 🆘 Suporte
 
 - **Issues**: [GitHub Issues](https://github.com/asunavlr/developers-api/issues)
-- **Documentação**: http://localhost:8000/docs
+- **Documentação**: http://localhost:3000/docs
 - **Email**: suporte@exemplo.com
 
 ## 🙏 Agradecimentos
